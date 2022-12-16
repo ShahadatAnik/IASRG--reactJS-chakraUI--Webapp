@@ -4,8 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Center, ChakraProvider, Spinner } from '@chakra-ui/react';
 import theme from './theme/index';
 
-import { ColorModeSwitcher } from './theme/ColorModeSwitcher';
-import { BackToTop } from './theme/BackToTop';
 import NavBar from './components/utils/Navbar';
 import Home from './components/Home';
 
@@ -24,29 +22,13 @@ function LoadingIcon() {
 }
 
 const NotFoundPage = lazy(() => import('./components/utils/NotFoundPage'));
+const Signup = lazy(() => import('./components/LoginAndSignup/Signup'));
+const Login = lazy(() => import('./components/LoginAndSignup/Login'));
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <NavBar />
-      <ColorModeSwitcher
-        justifySelf="flex-end"
-        sx={{
-          position: 'fixed',
-          bottom: '1rem',
-          right: '1rem',
-          zIndex: '9999',
-        }}
-      />
-      <BackToTop
-        justifySelf="flex-end"
-        sx={{
-          position: 'fixed',
-          bottom: '5rem',
-          right: '1rem',
-          zIndex: '9999',
-        }}
-      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -58,6 +40,22 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="/signup"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <Signup />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <Login />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
@@ -65,3 +63,4 @@ function App() {
 }
 
 export default App;
+
