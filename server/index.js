@@ -22,7 +22,7 @@ app.post('/user/create_user', (req, res)=>{
     const password = req.body.password
     const phone = req.body.phone
     const profession = req.body.profession
-    console.log(name, email, password, phone, profession)
+    //console.log(name, email, password, phone, profession)
     const create_user = "INSERT INTO users (name, email, phone, profession, password) VALUES (?, ?, ?, ?, ?);"
     db.query(create_user, [name, email, phone, profession, password], (err, result)=>{
         res.send(result)
@@ -39,7 +39,7 @@ app.post('/user/verify_login/', (req, res)=>{
     console.log("verify login")
     const email = req.body.email
     const password = req.body.password
-    console.log(email, password)
+    //console.log(email, password)
     const get_user = "select id,password from users where email = ?"
     db.query(get_user, [email,], (err, result)=>{
         if(result.length == 0){
