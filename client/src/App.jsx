@@ -6,6 +6,7 @@ import theme from './theme/index';
 
 import NavBar from './components/utils/Navbar';
 import Home from './components/Home';
+// import AuthUser from './components/Auth/AuthUser';
 
 function LoadingIcon() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <NavBar />
       <BrowserRouter>
         <Routes>
+          {/* <AuthUser> */}
           <Route path="/" element={<Home />} />
           <Route
             path="/*"
@@ -56,6 +58,7 @@ function App() {
               </Suspense>
             }
           />
+          {/* </AuthUser> */}
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
