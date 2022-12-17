@@ -54,6 +54,8 @@ export default function SimpleCard() {
   const onSubmit = e => {
     if (isInvalidEmail || isInvalidPassword) {
       e.preventDefault();
+    }else{
+      console.log(user);
     }
   };
 
