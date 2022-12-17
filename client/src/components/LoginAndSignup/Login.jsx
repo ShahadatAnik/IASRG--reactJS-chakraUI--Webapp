@@ -1,3 +1,6 @@
+import Axios from 'axios';
+import { sha256, sha224 } from 'js-sha256';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -19,6 +22,7 @@ import { BiHide, BiShow } from 'react-icons/bi';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
 export default function SimpleCard() {
+  const navigate = useNavigate();
   const [isInvalidEmail, setIsInvalidEmail] = React.useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = React.useState(false);
   const [user, setUser] = React.useState({
@@ -56,6 +60,20 @@ export default function SimpleCard() {
       e.preventDefault();
     }else{
       console.log(user);
+      Axios.post("http://localhost:3001/user/verify_login/", {
+      email: user.email,
+      password: sha256(user.password),
+    }/*, navigate('/Login')*/).then((response) => {if(response.data=="No user found"){
+      alert("No user found");
+    }else if(response.data=="wrong password"){
+      alert("Wrong password");
+    }else{
+      localStorage.setItem('loggedin', 'true');
+      localStorage.setItem('user', response.data);
+      console.log(response.data);
+      window.location.href = "/..";
+    }
+  });
     }
   };
 
