@@ -33,30 +33,15 @@ app.post('/user/create_user', (req, res)=>{
         }
         
     });
-    
 })
 
-var storage = multer.diskStorage({
-    destination: (req, file, callBack) => {
-        callBack(null, './public/images/')     // './public/images/' directory name where save the file
-    },
-    filename: (req, file, callBack) => {
-        callBack(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-    }
-})
- 
-var upload = multer({
-    storage: storage
-});
-
-app.post('/paper/publish/', upload.single('image'), (req, res)=>{
+app.post('/paper/publish/', (req, res)=>{
     const publisher_id = req.body.publisher_id
     const paper_name = req.body.paper_name
     const publication_date = req.body.publication_date
     const publication_place = req.body.publication_place
     const paper_full_text = req.body.paper_full_text
-    console.log("File name: "+req.body.formData.filename)
-    //console.log(name, email, password, phone, profession)
+
     const publish_paper = "INSERT INTO papers (publishers_id, paper_name, publication_date, publication_place, full_text) VALUES (?, ?, ?, ?, ?);"
     db.query(publish_paper, [publisher_id, paper_name, publication_date, publication_place, paper_full_text], (err, result)=>{
         res.send("Paper published")
@@ -65,6 +50,7 @@ app.post('/paper/publish/', upload.single('image'), (req, res)=>{
         }
         
     });
+
     
 })
 

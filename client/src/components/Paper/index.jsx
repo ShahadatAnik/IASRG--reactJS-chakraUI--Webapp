@@ -19,30 +19,23 @@ export default function Index() {
     if(localStorage.getItem('loggedin') !== 'true'){
       window.location.href = "/login";
     }
-  }, []);
+  }, [file]);
 
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
+    
   };
+  
 
   const submit_paper = () => {
-    // console.log(paper_name);
-    // console.log(publication_date);
-    // console.log(publication_place);
-    // console.log(paper_full_text);
-    // console.log(publisher_id);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", fileName);
-    console.log(formData);
+    
     Axios.post("http://localhost:3001/paper/publish/", {
       paper_name: paper_name,
       publication_date: publication_date,
       publication_place: publication_place,
       paper_full_text: paper_full_text,
       publisher_id: publisher_id,
-      formData: formData,
     }).then((response) => {
       if(response.data=="Paper published"){
         alert("Paper published");
@@ -101,12 +94,6 @@ export default function Index() {
               setPaper_full_text(e.target.value);
             }}
           />
-          <br></br><br></br>
-
-          <input type="file"onChange={(e) => {
-              setFile(e.target.files[0]);
-              setFileName(e.target.files[0].name);
-            }} />
           <br></br><br></br>
 
           <button variant="contained" onClick={submit_paper}>Submit</button>
