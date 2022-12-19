@@ -14,9 +14,19 @@ export default function Index() {
     localStorage.setItem('user', '');
     window.location.href = "/login";
   }
+
+  const paper_publish = () => {
+    window.location.href = "/paper_publish";
+  }
   return (
-    <div>Home sdjkflkdsjf
+    <div>Home
+      <div>
+      <button onClick = {()=>{paper_publish()}}>Publish A Paper</button>
+      </div>
+      <div>
       <button onClick = {()=>{logout()}}>Logout</button>
+      </div>
+      
     </div>
     
   )

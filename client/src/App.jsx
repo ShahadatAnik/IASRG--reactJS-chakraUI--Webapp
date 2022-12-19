@@ -6,6 +6,7 @@ import theme from './theme/index';
 
 import NavBar from './components/utils/Navbar';
 import Home from './components/Home';
+import Paper from './components/Paper';
 // import AuthUser from './components/Auth/AuthUser';
 
 function LoadingIcon() {
@@ -55,6 +56,14 @@ function App() {
             element={
               <Suspense fallback={<LoadingIcon />}>
                 <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/paper_publish"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <Paper />
               </Suspense>
             }
           />
