@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const mysql = require('mysql')
+const multer = require('multer')
+const path = require('path')
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -31,12 +33,30 @@ app.post('/user/create_user', (req, res)=>{
         }
         
     });
+})
+
+app.post('/paper/publish/', (req, res)=>{
+    const publisher_id = req.body.publisher_id
+    const paper_name = req.body.paper_name
+    const publication_date = req.body.publication_date
+    const publication_place = req.body.publication_place
+    const paper_full_text = req.body.paper_full_text
+
+    const publish_paper = "INSERT INTO papers (publishers_id, paper_name, publication_date, publication_place, full_text) VALUES (?, ?, ?, ?, ?);"
+    db.query(publish_paper, [publisher_id, paper_name, publication_date, publication_place, paper_full_text], (err, result)=>{
+        res.send("Paper published")
+        if(err){
+            console.log(err)
+        }
+        
+    });
+
     
 })
 
 
 app.post('/user/verify_login/', (req, res)=>{
-    console.log("verify login")
+    //console.log("verify login")
     const email = req.body.email
     const password = req.body.password
     //console.log(email, password)
