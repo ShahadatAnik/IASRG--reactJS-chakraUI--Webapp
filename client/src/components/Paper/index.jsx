@@ -14,11 +14,16 @@ export default function Index() {
   const [paper_full_text, setPaper_full_text] = useState();
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
+  const [papers, setPapers] = useState([])
 
   useEffect(()=> {
     if(localStorage.getItem('loggedin') !== 'true'){
       window.location.href = "/login";
     }
+    fetch('http://localhost:3001/paper/getPaper/')
+        .then((resp) => resp.json())
+        .then((resp) => setPapers(resp))
+        .catch((error) => console.log(error));
   }, [file]);
 
   const saveFile = (e) => {
@@ -27,9 +32,7 @@ export default function Index() {
     
   };
   
-
   const submit_paper = () => {
-    
     Axios.post("http://localhost:3001/paper/publish/", {
       paper_name: paper_name,
       publication_date: publication_date,
@@ -48,7 +51,27 @@ export default function Index() {
 
 
   return (
-    <div>Paper Publish
+    <div>
+      <div>
+        <h1>Papers</h1>
+        <br></br>
+        <table>
+          <tr>
+            <th>Paper Name</th>
+            <th>Paper id</th>
+            <th>Publisher id</th>
+          </tr>
+          {papers.map((paper) => (
+            <tr>
+              <td>{paper.paper_name}</td>
+              <td>{paper.id}</td>
+              <td>{paper.publishers_id}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+      
+      Paper Publish
         <div>
           <input
           type= "text"

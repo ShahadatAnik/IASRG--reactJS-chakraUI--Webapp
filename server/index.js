@@ -35,6 +35,14 @@ app.post('/user/create_user', (req, res)=>{
     });
 })
 
+app.get('/paper/getPaper', (req,res)=>{
+    const sqlSelect = "SELECT paper_name,id, publishers_id from papers";
+    db.query(sqlSelect, (err, result)=>{
+        //console.log(result)
+        res.send(result);
+    });
+});
+
 app.post('/paper/publish/', (req, res)=>{
     const publisher_id = req.body.publisher_id
     const paper_name = req.body.paper_name
@@ -48,10 +56,7 @@ app.post('/paper/publish/', (req, res)=>{
         if(err){
             console.log(err)
         }
-        
     });
-
-    
 })
 
 
