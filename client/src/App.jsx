@@ -26,6 +26,11 @@ function LoadingIcon() {
 const NotFoundPage = lazy(() => import('./components/utils/NotFoundPage'));
 const Signup = lazy(() => import('./components/LoginAndSignup/Signup'));
 const Login = lazy(() => import('./components/LoginAndSignup/Login'));
+const PublishPaper = lazy(() => import('./components/Paper'));
+const AllPapers = lazy(() => import('./components/Paper/AllPapers'));
+const IndividualPaper = lazy(() =>
+  import('./components/Paper/IndividualPaper')
+);
 
 function App() {
   return (
@@ -60,10 +65,26 @@ function App() {
             }
           />
           <Route
-            path="/paper_publish"
+            path="/paper-publish"
             element={
               <Suspense fallback={<LoadingIcon />}>
-                <Paper />
+                <PublishPaper />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/papers"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <AllPapers />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/papers/:id"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <IndividualPaper />
               </Suspense>
             }
           />
@@ -75,4 +96,3 @@ function App() {
 }
 
 export default App;
-

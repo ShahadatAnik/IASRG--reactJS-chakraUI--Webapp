@@ -1,7 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import { sha256, sha224 } from 'js-sha256';
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -22,7 +22,7 @@ import {
   InputLeftAddon,
   Radio,
   RadioGroup,
-  Icon,
+  Link,
 } from '@chakra-ui/react';
 import { FaUserCircle } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
@@ -118,16 +118,20 @@ export default function Signup() {
     ) {
       e.preventDefault();
     } else {
-      if(user.profession === ''){
-        user.profession = '1'
+      if (user.profession === '') {
+        user.profession = '1';
       }
-      Axios.post("http://localhost:3001/user/create_user/", {
-      name: user.name,
-      email: user.email,
-      password: sha256(user.password),
-      phone: user.phone,
-      profession: user.profession,
-    }, navigate('/Login'));
+      Axios.post(
+        'http://localhost:3001/user/create_user/',
+        {
+          name: user.name,
+          email: user.email,
+          password: sha256(user.password),
+          phone: user.phone,
+          profession: user.profession,
+        },
+        navigate('/Login')
+      );
     }
   };
   return (
@@ -221,11 +225,10 @@ export default function Signup() {
               Join our team
             </Heading>
             <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
-              somthing will be written here
+              something will be written here
             </Text>
           </Stack>
           <Box as={'form'} mt={10} onSubmit={onSubmit}>
-            
             <Stack spacing={4}>
               <InputGroup>
                 <InputLeftElement
@@ -276,26 +279,28 @@ export default function Signup() {
               <InputGroup border={'1px solid #e2e8f0'} rounded={'md'} p={2}>
                 <RadioGroup ml={1} defaultValue="1" required name="profession">
                   <Stack
-                    
                     spacing={5}
                     align="center"
                     direction="row"
                     justify={'center'}
                   >
                     <RiProfileLine color="gray.300" />
-                    <Radio colorScheme="red" 
-                    onChange={e => {
-                      setUser({ ...user, profession: '1' });
-                    }}
-                     value="1" >
-                      
+                    <Radio
+                      colorScheme="red"
+                      onChange={e => {
+                        setUser({ ...user, profession: '1' });
+                      }}
+                      value="1"
+                    >
                       Professor
                     </Radio>
-                    <Radio colorScheme="green"
-                    onChange={e => {
-                      setUser({ ...user, profession: '2' });
-                    }}
-                     value="2">
+                    <Radio
+                      colorScheme="green"
+                      onChange={e => {
+                        setUser({ ...user, profession: '2' });
+                      }}
+                      value="2"
+                    >
                       Student
                     </Radio>
                   </Stack>
@@ -351,9 +356,13 @@ export default function Signup() {
             >
               Submit
             </Button>
-            
           </Box>
-          form
+          <Text align={'center'} fontSize={'sm'} mt={8}>
+            Already have an account?
+            <Link href="/login" color="teal.500" ml={2}>
+              Login
+            </Link>
+          </Text>
         </Stack>
       </Container>
     </Box>

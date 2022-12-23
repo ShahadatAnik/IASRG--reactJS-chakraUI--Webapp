@@ -1,5 +1,18 @@
 import React from 'react';
-import { Link, Box, Flex, Text, keyframes, Stack } from '@chakra-ui/react';
+import {
+  Link,
+  Box,
+  Flex,
+  Text,
+  keyframes,
+  Stack,
+  HStack,
+  Tag,
+  TagRightIcon,
+  TagLabel,
+} from '@chakra-ui/react';
+
+import { FiLogOut } from 'react-icons/fi';
 
 const wave = keyframes`
   0% {
@@ -43,14 +56,19 @@ function Logo(props) {
 
 const NavBar = props => {
   const [isOpen, setIsOpen] = React.useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <NavBarContainer isOpen={isOpen} {...props}>
       <Logo />
-      <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
+      {localStorage.getItem('loggedin') === 'true' ? (
+        <>
+          <MenuToggle toggle={toggle} isOpen={isOpen} />
+          <MenuLinks isOpen={isOpen} />
+        </>
+      ) : (
+        null
+      )}
     </NavBarContainer>
   );
 };
@@ -123,6 +141,12 @@ const MenuItem = ({ children, isLast, to = '/', ...rest }) => {
 };
 
 const MenuLinks = ({ isOpen }) => {
+  const logout = () => {
+    localStorage.setItem('loggedin', 'false');
+    localStorage.setItem('user', '');
+    console.log('logout');
+    window.location.href = '/login';
+  };
   return (
     <Box
       rounded={'md'}
@@ -139,7 +163,31 @@ const MenuLinks = ({ isOpen }) => {
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/login">Login</MenuItem>
+        <MenuItem to="/papers">Papers</MenuItem>
+        <MenuItem to="/paper-publish">Publish Paper</MenuItem>
+        <Link
+          color={'yellow.300'}
+          href={'/login'}
+          _hover={{
+            color: 'yellow.300',
+            backgroundColor: 'red.500',
+            rounded: 'md',
+          }}
+        >
+          <Tag size={'lg'} bg={'red.500'} border={'.5px solid #F6E05E'}>
+            <Text
+              display="block"
+              color={'yellow.300'}
+              fontWeight="bold"
+              py={1}
+              rounded="md"
+              onClick={logout}
+            >
+              Logout
+            </Text>
+            <TagRightIcon as={FiLogOut} color={'yellow.300'} />
+          </Tag>
+        </Link>
 
         {/* <MenuItem to="/signup" isLast>
           <Button
@@ -190,7 +238,6 @@ const NavBarContainer = ({ isOpen, children, ...props }) => {
       py={1}
       bg={'green.500'}
       roundedBottom={'lg'}
-      // animation open from top
       animation={isOpen ? `${fromTop} ease 1s forwards` : ``}
       {...props}
     >
