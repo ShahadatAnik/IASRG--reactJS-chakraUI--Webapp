@@ -9,6 +9,7 @@ import {
   Center,
   Spinner,
   Heading,
+  Button,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 
@@ -34,6 +35,27 @@ export default function IndividualPaper() {
 
     setIsLoading(false);
   }, []);
+  const handleDelete = () => {
+    console.log(id);
+    fetch('http://localhost:3001/paper/deletePaper/', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then(response => {
+        // if (response.data == 'Paper deleted') {
+           alert('Paper deleted');
+           window.location.href = '/..';
+        // } else {
+        //   alert('Error');
+        // }
+      });
+  };
+  
   console.log(paper);
   return (
     <Container maxW="container.md" as="section" justifyContent={'center'}>
@@ -58,6 +80,13 @@ export default function IndividualPaper() {
             >
               {paper[0]?.paper_name}
             </Heading>
+            <Text
+              align={'center'}
+              fontSize={['md', 'md', 'lg']}
+              color={'gray.500'}
+            >
+              <Button onClick={()=>handleDelete()}>Delete</Button>
+            </Text>
 
             <Flex
               gap={1}

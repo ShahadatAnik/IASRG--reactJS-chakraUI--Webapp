@@ -79,7 +79,7 @@ export default function Index() {
       e.preventDefault();
     } else {
       Axios.post('http://localhost:3001/paper/publish/', {
-        id: paper.id,
+        publisher_id: paper.id,
         paper_name: paper.name,
         publication_date: paper.publication_date,
         publication_place: paper.publication_place,

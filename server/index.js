@@ -93,6 +93,15 @@ app.post("/user/verify_login/", (req, res) => {
     });
 });
 
+app.delete("/paper/deletePaper/", (req, res) => {
+    const id = req.body.id;
+    const sqlDelete = "DELETE FROM papers WHERE id = ?";
+    db.query(sqlDelete, id, (err, result) => {
+        if (err) console.log(err);
+        else return res.send("Paper deleted");
+    });
+});
+
 app.listen(3001, () => {
     console.log("Running on 3001");
 });
