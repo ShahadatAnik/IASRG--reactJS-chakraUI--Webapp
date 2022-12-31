@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 import {
   Stack,
   Text,
@@ -24,6 +25,7 @@ export default function Index() {
   const [papers, setPapers] = useState([]);
   const [username, setUsername] = useState('');
 
+
   useEffect(() => {
     if (localStorage.getItem('loggedin') !== 'true') {
       window.location.href = '/login';
@@ -32,13 +34,7 @@ export default function Index() {
       .then(resp => resp.json())
       .then(resp => setPapers(resp))
       .catch(error => console.log(error));
-  }, []);
-
-  const getUserName = id => {
-    fetch(`http://localhost:3001/user/getUser/${id}`).then(response => {
-      console.log(response.name);
-    });
-  };
+  },);
 
   return (
     <Box p={2} mx={2}>
@@ -97,7 +93,7 @@ export default function Index() {
                     color={'yellow.300'}
                     fontSize={['md', 'md', 'lg']}
                   >
-                    {getUserName(paper.publishers_id)}
+                    {paper.name}
                   </Text>
                   <Spacer />
 

@@ -39,10 +39,19 @@ app.post("/user/create_user", (req, res) => {
 });
 
 app.get("/paper/getPaper", (req, res) => {
-    const sqlSelect = "SELECT * from papers";
+    const sqlSelect = "SELECT u.name, p.id, p.publishers_id, p.paper_name, p.publication_date,p.publication_place,p.full_text from papers p ,users u where p.publishers_id = u.id";
     db.query(sqlSelect, (err, result) => {
         //console.log(result)
         res.send(result);
+    });
+});
+
+app.get("/user/getUser/:id", (req, res) => {
+    const id = req.params.id;
+    const sqlSelect = "SELECT name from users where id = " + id;
+    db.query(sqlSelect, id, (err, result) => {
+        console.log(result[0].name);
+        res.send(result); 
     });
 });
 
@@ -129,14 +138,7 @@ app.delete("/paper/deletePaper/", (req, res) => {
     });
 });
 
-app.get("/user/getUser/:id", (req, res) => {
-    const id = req.params.id;
-    const sqlSelect = "SELECT name from users where id = " + id;
-    db.query(sqlSelect, id, (err, result) => {
-        console.log(result);
-        res.send(result);
-    });
-});
+
 
 app.listen(3001, () => {
     console.log("Running on 3001");
