@@ -103,7 +103,7 @@ export default function IndividualPaper() {
                 color={'gray.500'}
                 fontSize={['md', 'md', 'lg']}
               >
-                {paper[0]?.publishers_id}
+                {paper[0]?.name}
               </Text>
               <Spacer />
 
