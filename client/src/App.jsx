@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Center, ChakraProvider, Spinner } from '@chakra-ui/react';
 import theme from './theme/index';
+import { ColorModeSwitcher } from './theme/ColorModeSwitcher';
 
 import NavBar from './components/utils/Navbar';
 import Home from './components/Home';
@@ -31,11 +32,13 @@ const AllPapers = lazy(() => import('./components/Paper/AllPapers'));
 const IndividualPaper = lazy(() =>
   import('./components/Paper/IndividualPaper')
 );
+const UpdatePaper = lazy(() => import('./components/Paper/UpdatePaper'));
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <NavBar />
+      {/* <ColorModeSwitcher /> */}
       <BrowserRouter>
         <Routes>
           {/* <AuthUser> */}
@@ -85,6 +88,14 @@ function App() {
             element={
               <Suspense fallback={<LoadingIcon />}>
                 <IndividualPaper />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/papers-update/:paperID"
+            element={
+              <Suspense fallback={<LoadingIcon />}>
+                <UpdatePaper />
               </Suspense>
             }
           />

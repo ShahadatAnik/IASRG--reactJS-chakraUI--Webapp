@@ -73,6 +73,33 @@ app.post("/paper/publish/", (req, res) => {
     );
 });
 
+app.post("/paper/edit_paper/", (req, res) => {
+    const paper_id = req.body.paper_id;
+    const paper_name = req.body.paper_name;
+    const publication_date = req.body.publication_date;
+    const publication_place = req.body.publication_place;
+    const paper_full_text = req.body.paper_full_text;
+
+    const update_paper =
+        "UPDATE papers SET paper_name =? , publication_date=?, publication_place=?, full_text=? WHERE id=?;";
+    db.query(
+        update_paper,
+        [
+            paper_name,
+            publication_date,
+            publication_place,
+            paper_full_text,
+            paper_id,
+        ],
+        (err, result) => {
+            res.send("Paper Updated");
+            if (err) {
+                console.log(err);
+            }
+        }
+    );
+});
+
 app.post("/user/verify_login/", (req, res) => {
     //console.log("verify login")
     const email = req.body.email;
@@ -99,6 +126,15 @@ app.delete("/paper/deletePaper/", (req, res) => {
     db.query(sqlDelete, id, (err, result) => {
         if (err) console.log(err);
         else return res.send("Paper deleted");
+    });
+});
+
+app.get("/user/getUser/:id", (req, res) => {
+    const id = req.params.id;
+    const sqlSelect = "SELECT name from users where id = " + id;
+    db.query(sqlSelect, id, (err, result) => {
+        console.log(result);
+        res.send(result);
     });
 });
 

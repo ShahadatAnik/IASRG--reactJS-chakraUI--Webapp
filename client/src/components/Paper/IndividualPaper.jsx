@@ -45,17 +45,20 @@ export default function IndividualPaper() {
       body: JSON.stringify({
         id: id,
       }),
-    })
-      .then(response => {
-        // if (response.data == 'Paper deleted') {
-           alert('Paper deleted');
-           window.location.href = '/..';
-        // } else {
-        //   alert('Error');
-        // }
-      });
+    }).then(response => {
+      // if (response.data == 'Paper deleted') {
+      alert('Paper deleted');
+      window.location.href = '/..';
+      // } else {
+      //   alert('Error');
+      // }
+    });
   };
-  
+
+  const handleUpdate = () => {
+    window.location.href = `/papers-update/${id}`;
+  };
+
   console.log(paper);
   return (
     <Container maxW="container.md" as="section" justifyContent={'center'}>
@@ -85,7 +88,8 @@ export default function IndividualPaper() {
               fontSize={['md', 'md', 'lg']}
               color={'gray.500'}
             >
-              <Button onClick={()=>handleDelete()}>Delete</Button>
+              <Button onClick={() => handleDelete()}>Delete</Button>
+              <Button onClick={() => handleUpdate()}>Update</Button>
             </Text>
 
             <Flex

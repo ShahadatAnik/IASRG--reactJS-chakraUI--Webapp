@@ -22,6 +22,7 @@ import { FaUserCircle } from 'react-icons/fa';
 
 export default function Index() {
   const [papers, setPapers] = useState([]);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     if (localStorage.getItem('loggedin') !== 'true') {
@@ -32,6 +33,12 @@ export default function Index() {
       .then(resp => setPapers(resp))
       .catch(error => console.log(error));
   }, []);
+
+  const getUserName = id => {
+    fetch(`http://localhost:3001/user/getUser/${id}`).then(response => {
+      console.log(response.name);
+    });
+  };
 
   return (
     <Box p={2} mx={2}>
@@ -59,7 +66,7 @@ export default function Index() {
         {papers.map((paper, index) => (
           <Link to={`/papers/${paper.id}`}>
             <GridItem
-              key={paper.id}
+              key={index}
               boxShadow={['md', 'md', 'lg']}
               p={4}
               m={2}
@@ -90,9 +97,9 @@ export default function Index() {
                     color={'yellow.300'}
                     fontSize={['md', 'md', 'lg']}
                   >
-                    {paper.publishers_id}
+                    {getUserName(paper.publishers_id)}
                   </Text>
-                  {/* <Spacer />
+                  <Spacer />
 
                   <MdEditLocation mt={2} size={'20px'} color="gray.300" />
                   <Text
@@ -101,7 +108,7 @@ export default function Index() {
                     fontSize={['md', 'md', 'lg']}
                   >
                     {paper.publication_place}
-                  </Text> */}
+                  </Text>
 
                   <Spacer />
 
